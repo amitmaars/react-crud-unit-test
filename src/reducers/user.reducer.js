@@ -8,29 +8,23 @@ const userReducer = (state = INITIAL_STATE, action) => {
         return {
             ...state,
             user: [
-            ...state.user,
-            {
-                userId: action.payload.userId,
-                name: action.payload.name,
-                email: action.payload.email
-            }
+              ...state.user,
+              {
+                  userId: action.payload.userId,
+                  name: action.payload.name,
+                  email: action.payload.email
+              }
             ]
         }
       case 'DELETE_USER':
-        return state.filter((user)=>user.id !== action.id);
-      case 'EDIT_USER':
-        return state.map((user)=>user.id === action.id ? {...user,editing:!user.editing}:user);
+        return state.user.filter((uu)=>uu.userId !== action.id);
       case 'LIST_USER':
-        return state;
-      case '"GET_BY_USERID':
-        return state.user.user.filter((user)=>{
-          if(user.id === action.payload) {
-            console.log("GET_BY_USERID",action);
-            return user
-          } 
-        })
+        return state.user;
+      case 'GET_BY_USERID':
+        console.log("get by id", action);
+        return state.user.filter((uu)=>uu.userId === action.id);
       default:
-        return state;
+        return state.user;
     }
   }
   export default userReducer;

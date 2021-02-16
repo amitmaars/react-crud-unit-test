@@ -13,6 +13,7 @@ export function updateUser(payload) {
 }
 
 export function getByUserId(id) {
+    console.log("action page --> getByUserId",id);
     return {
         type: "GET_BY_USERID",
         payload: id

@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from "react";
-// import {listUser} from '../../actions/user.action';
+import {deleteUser} from '../../actions/user.action';
 // import {UserService} from '../../services/user.service';
 import { useSelector, useDispatch } from "react-redux";
 import  { Link } from 'react-router-dom'
@@ -9,6 +9,12 @@ const List = (props) =>{
     //const [user, setUser] = useState( [] );
     const {user } = useSelector(state => state.user);
     console.log("LIST", user);
+
+    const delUser = (id) => {
+        console.log("deleteUser",id);
+        // useDispatch(deleteUser(id));
+        props.dispatch(deleteUser(id))
+    }
 
     return (
         
@@ -32,6 +38,7 @@ const List = (props) =>{
                     <td>{user.email}</td>
                     <td>
                     <Link to={`/update/${user.userId}`}>Edit</Link>
+                    <button onClick={()=>delUser(user.userId)}>Delete</button>
                     </td>
                 </tr>;
             })}

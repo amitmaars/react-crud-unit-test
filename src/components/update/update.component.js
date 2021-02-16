@@ -7,11 +7,13 @@ const Update = (props) =>{
     const [activeUser, setActiveUser] = useState(null);
     //console.log("update", props.match.params.id);
     const paramUserId = props.match.params.id;
-    // const {user} = useSelector(state => state.user);
+    //const {user} = useSelector(state => state.user);
 
-    setActiveUser(useDispatch(getByUserId(paramUserId)));
+    //  setActiveUser(useDispatch(getByUserId(paramUserId)));
+    // setActiveUser(props.dispatch(getByUserId(paramUserId)));
 
-    console.log("update 2",activeUser);
+
+    console.log("update 2",useDispatch(getByUserId(paramUserId)) );
     
     
     // useEffect(()=>{

@@ -4,6 +4,8 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import OuterLayoutComponent from './components/common/outer.component';
 import InnerLayoutComponent from './components/common/inner.component';
 import Login from './components/login/login.component';
@@ -14,6 +16,7 @@ import List from './components/list/list.component';
 
 function App() {
   return (
+    <Provider store={store}>
     <Router>
         <div>
           <h1>Welcome</h1>
@@ -28,7 +31,7 @@ function App() {
           </Switch>
         </div>
       </Router>
-
+    </Provider>
   );
 }
 
