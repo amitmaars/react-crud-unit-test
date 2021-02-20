@@ -1,26 +1,37 @@
 import React, { useEffect, useState} from "react";
-import {deleteUser} from '../../actions/user.action';
-// import {UserService} from '../../services/user.service';
+import {deleteUser, listUser} from '../../actions/user.action';
+import {UserService} from '../../services/user.service';
 import { useSelector, useDispatch } from "react-redux";
-import  { Link } from 'react-router-dom'
-
+import  { Link } from 'react-router-dom';
 
 const List = (props) =>{
+    const dispatch = useDispatch();
     //const [user, setUser] = useState( [] );
-    const {user } = useSelector(state => state.user);
-    console.log("LIST", user);
+    const { users } = useSelector( state => state.userReducer);
+    console.log("LIST", users);
 
     const delUser = (id) => {
         console.log("deleteUser",id);
         // useDispatch(deleteUser(id));
-        props.dispatch(deleteUser(id))
+        dispatch(deleteUser(id))
     }
+
+    useEffect(async ()=>{
+        try{
+            const users = await UserService.listUser();
+            console.log(users.data);
+            dispatch(listUser(users.data))
+        }
+        catch(err){
+            console.log(err);
+        }
+    },[])
 
     return (
         
       <div>  
         <div>List User</div>
-        {user !== undefined && user.length > 0 && 
+        {users !== undefined && users.length > 0 && 
         <table>
             <thead>
                 <tr>
@@ -31,14 +42,14 @@ const List = (props) =>{
                 </tr>
             </thead>
             <tbody>
-            {user.map(function(user, i){
-                return <tr key={user.userId}>
-                    <td>{user.userId}</td>
-                    <td>{user.name}</td>
+            {users.map(function(user, i){
+                return <tr key={user.id}>
+                    <td>{user.id}</td>
+                    <td>{user.first_name}</td>
                     <td>{user.email}</td>
                     <td>
-                    <Link to={`/update/${user.userId}`}>Edit</Link>
-                    <button onClick={()=>delUser(user.userId)}>Delete</button>
+                    <Link to={`/update/${user.id}`}>Edit</Link>
+                    <button onClick={()=>delUser(user.id)}>Delete</button>
                     </td>
                 </tr>;
             })}

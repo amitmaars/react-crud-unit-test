@@ -10,12 +10,13 @@ function listUser(){
         "method": "GET",
         "headers": {
         "content-type": "application/json",
-        "accept": "application/json"
+        "accept": "application/json",
+        "app-id": config.app_id
         }
     }
 
     // creates entity
-    return fetch(`${config.url}/api/users`, requestOptions)
+    return fetch(`${config.url}/users?limit=10`, requestOptions)
     .then(response => response.json())
     .then(response => {
         console.log(response)

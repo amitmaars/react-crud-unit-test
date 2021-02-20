@@ -27,9 +27,9 @@ export function deleteUser(id) {
     };
 }
 
-export function listUser() {
+export function listUser(payload) {
     return {
         type: "LIST_USER",
-        //payload: payload
+        payload: payload
     };
 }

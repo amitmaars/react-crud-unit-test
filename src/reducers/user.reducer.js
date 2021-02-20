@@ -1,30 +1,30 @@
-const INITIAL_STATE = {user: [], status:null, error:null, loading: false};
-const userReducer = (state = INITIAL_STATE, action) => {
+const INITIAL_STATE = { users: [], user:{}, status:null, error:null, loading: false};
+const userReducer = (state=INITIAL_STATE, action) => {
+  console.log(INITIAL_STATE, state);
     switch(action.type) {
       case 'CREATE_USER':
-          //console.log("CREATE_USER",action);
-        //return state.user.concat([action.data]);
-        //return {...state, action.payload}
         return {
             ...state,
-            user: [
-              ...state.user,
-              {
-                  userId: action.payload.userId,
-                  name: action.payload.name,
-                  email: action.payload.email
-              }
-            ]
+            user: action.payload
         }
       case 'DELETE_USER':
-        return state.user.filter((uu)=>uu.userId !== action.id);
+        return {
+          ...state,
+          users: state.users.filter(user => user.id !== action.payload)
+        };
       case 'LIST_USER':
-        return state.user;
+        return {
+          ...state,
+          users: action.payload
+        };
       case 'GET_BY_USERID':
-        console.log("get by id", action);
-        return state.user.filter((uu)=>uu.userId === action.id);
+        //console.log(state.users, action, state.users.find(user => user.id == action.payload));
+        return {
+          ...state,
+          user: state.users.find(user => user.id == action.payload)
+        };
       default:
-        return state.user;
+        return state.users;
     }
   }
   export default userReducer;

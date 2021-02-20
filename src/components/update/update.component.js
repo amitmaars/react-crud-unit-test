@@ -2,28 +2,22 @@ import React, { useEffect, useState} from "react";
 import FormComponent from '../form/form.component';
 import { useSelector, useDispatch } from "react-redux";
 import {getByUserId} from '../../actions/user.action';
+import { useParams } from 'react-router-dom';
 
 const Update = (props) =>{
-    const [activeUser, setActiveUser] = useState(null);
-    //console.log("update", props.match.params.id);
-    const paramUserId = props.match.params.id;
-    //const {user} = useSelector(state => state.user);
-
-    //  setActiveUser(useDispatch(getByUserId(paramUserId)));
-    // setActiveUser(props.dispatch(getByUserId(paramUserId)));
-
-
-    console.log("update 2",useDispatch(getByUserId(paramUserId)) );
+    // const [activeUser, setActiveUser] = useState(null);
+    const dispatch = useDispatch();
+    let {id} = useParams(); //props.match.params.id;
+    console.log("update", id);
+    
+    dispatch(getByUserId(id));
+    const {user} = useSelector(state => state.userReducer);
+    console.log("update 3", user );
     
     
     // useEffect(()=>{
-    //     setActiveUser(user.filter((uu)=>{
-    //         if(uu.userId === paramUserId){
-    //             return uu;
-    //         }
-    //     }));
-    //     console.log("update 2",activeUser);
-    // },[user, paramUserId, activeUser])
+    //     dispatch(getByUserId(paramUserId));
+    // },[paramUserId])
 
     
 
@@ -35,7 +29,7 @@ const Update = (props) =>{
 
     return (
         
-        <FormComponent handleSubmitInParent={ getdata } type="Update"/>
+        <FormComponent handleSubmitInParent={ getdata } preloadData={user} type="Update"/>
 
     )
 }
